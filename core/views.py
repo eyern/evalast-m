@@ -216,7 +216,7 @@ def cart_view(request):
 		return render(request, 'core/cart.html', {
 			'cart_data': request.session['cart_data_object'],
 			'totalcartitems': len(request.session['cart_data_object']),
-			'cart_total_amount': cart_total_amount + 250
+			'cart_total_amount': cart_total_amount + 450
 		})
 		
 	else:
@@ -238,7 +238,7 @@ def delete_from_cart(request):
 	context = render_to_string('core/async/cart-list.html', {
 			'cart_data': request.session['cart_data_object'],
 			'totalcartitems': len(request.session['cart_data_object']),
-			'cart_total_amount': cart_total_amount + 250
+			'cart_total_amount': cart_total_amount + 450
 		})
 	return JsonResponse({
 			'data': context,
@@ -263,7 +263,7 @@ def update_cart(request):
 	context = render_to_string('core/async/cart-list.html', {
 			'cart_data': request.session['cart_data_object'],
 			'totalcartitems': len(request.session['cart_data_object']),
-			'cart_total_amount': cart_total_amount + 250
+			'cart_total_amount': cart_total_amount + 450
 		})
 	return JsonResponse({
 			'data': context,
