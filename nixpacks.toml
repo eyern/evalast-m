@@ -1,1 +1,0 @@
-nixPkgs = ["gcc", "postgresql_16", "python39"]
