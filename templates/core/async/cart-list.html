@@ -70,11 +70,24 @@
                     <h5>Cart Total</h5>
                     <ul>
                         <li>Subtotal <span>ksh{{ cart_total_amount|floatformat:2 }}</span></li>
-                        <li>Shipping Fees <span>ksh 250</span></li>
+                        <li>Shipping Fees <span>ksh 450</span></li>
                         <li>Total <span>ksh{{ cart_total_amount|floatformat:2 }}</span></li>
                     </ul>
+                    <style>
+                        .intaSendPayButton {
+                            display: inline-block;
+                            font-size: 14px;
+                            padding: 10px 28px 10px;
+                            color: #ffffff;
+                            text-transform: uppercase;
+                            font-weight: 700;
+                            background: #399dad;
+                            letter-spacing: 2px;
+                            border-style: none;
+                        }
+                    </style>
                     {% if totalcartitems %}
-                    <a href="{% url 'core:checkout' %}" class="primary-btn">PROCEED TO CHECKOUT</a>
+                    <button class="intaSendPayButton" data-amount="{{ cart_total_amount|floatformat:2 }}" data-currency="KES" data-email="user@example.com" data-phone_number="254712345678" data-first_name="John" data-last_name="Doe" data-api_ref="INV-12345">Complete Order</button>
                     {% endif %}
                 </div>
             </div>
