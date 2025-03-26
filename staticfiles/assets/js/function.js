@@ -341,3 +341,22 @@ function updateFileName() {
 	var fileName = input.files[0].name;
 	label.innerText = fileName;
 }
+
+// Initialize IntaSend with your publishable API key
+new window.IntaSend({
+	publicAPIKey: "ISPubKey_live_f1782224-589a-4f39-9152-42cf40825c03", // Replace with your sandbox or live key
+	live: true // Change to true when going live
+})
+.on("COMPLETE", (results) => {
+	console.log("Payment successful:", results);
+	// Redirect on successful payment
+	window.location.href = "https://evalastmotorcycles.com/success";
+})
+.on("FAILED", (results) => {
+	console.log("Payment failed:", results);
+	// Handle failure
+	alert("Payment failed, please try again.");
+})
+.on("IN-PROGRESS", (results) => {
+	console.log("Payment in progress:", results);
+});
