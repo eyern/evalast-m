@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse, HttpRequest
 from django.db.models import Avg, F, ExpressionWrapper, DecimalField
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
@@ -8,6 +8,8 @@ from core.models import Product, Category, Vendor, CartOrder, CartOrderItems, \
 ProductImages, ProductReview, Wishlist, Address, ContactUs
 from core.forms import ProductReviewFrom
 from taggit.models import Tag
+
+from intasend import APIService
 
 def index(request):
 	products = Product.objects.filter(product_status='published', featured=True)
@@ -323,34 +325,6 @@ def remove_from_wishlist(request):
 	data = render_to_string('core/async/wishlist-list.html', context)
 	return JsonResponse({'data': data, 'wishlist': qs_json})
 
-@login_required
-def checkout(request):
-	total_amt=0
-	totalAmt=0
-	if 'cart_data' in request.session:
-		for product_id,item in request.session['cart_data'].items():
-			totalAmt+=int(item['qty'])*float(item['price'])
-		# Order
-		order=CartOrder.objects.create(
-				user=request.user,
-				total_amt=totalAmt
-			)
-		# End
-		for product_id,item in request.session['cart_data'].items():
-			total_amt+=int(item['qty'])*float(item['price'])
-			# OrderItems
-			CartOrderItems=CartOrderItems.objects.create(
-				order=order,
-				invoice_no='invoice_no'+str(order.id),
-				item=item['title'],
-				image=item['image'],
-				qty=item['qty'],
-				price=item['price'],
-				total=float(item['qty'])*float(item['price'])
-				)
-			# End
-	return render(request, 'checkout.html',{'cart_data':request.session['cart_data'],'total_amt':len(request.session['cartdata']),'total_amt':total_amt,})
-
 def contact(request):
 	return render(request, 'core/contact.html')
 
@@ -371,6 +345,22 @@ def ajax_contact_form(request):
 
 	return JsonResponse({'data': data})
 
+@login_required
+def checkout(request):
+	total_amt=0
+	totalAmt=0
+
+	if 'cart_data' in request.session:
+		for product_id,item in request.session['cart_data'].items():
+			totalAmt+=int(item['qty'])*float(item['price'])
+		# Order
+		order=CartOrder.create(
+				user=request.user,
+				total_amt=totalAmt
+			)
+		# End
+	return render(request, 'core/checkout.html',{'cart_data':request.session['cart_data_object'],'totalcartitems':len(request.session['cart_data_object']),'total_amt':total_amt})
+
 def about(request):
 	return render(request, 'core/about.html')
 
@@ -378,6 +368,3 @@ def about(request):
 def success(request):
 	return render(request, 'core/success.html')
 
-@login_required
-def checkout(request):
-	return render(request, 'core/checkout.html')

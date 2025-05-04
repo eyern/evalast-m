@@ -60,7 +60,7 @@ urlpatterns = [
 	path('ajax-contact-form/', views.ajax_contact_form, name='ajax-contact-form'),
 
 	# About Us
-	path('about/', views.about, name='about'),  
+	path('about/', views.about, name='about'), 
     
 	# Checkout
 	path('checkout/', views.checkout, name='checkout'),

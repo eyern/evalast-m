@@ -30,7 +30,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['evalastmotorcycles.com', 'https://evalastmotorcycles.com']
+ALLOWED_HOSTS = ['evalastmotorcycles.com', 'https://evalastmotorcycles.com', '127.0.0.1']
 
 CSRF_TRUSTED_ORIGINS = ['https://evalastmotorcycles.com']
 
